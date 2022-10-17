@@ -1,0 +1,88 @@
+<body></body>
+<canvas width="1000" height="1000"></canvas>
+<script>
+        const results = [
+    {name: "Satisfied", count: 927, color: "lightblue"},
+    {name: "Neutral", count: 463, color: "lightgreen"},
+    {name: "Unsatisfied", count: 213, color: "pink"},
+    {name: "No comment", count: 510, color: "silver"}
+    ];
+    let cx = document.querySelector("canvas").getContext("2d");
+    let total = results.reduce((sum, {count}) => sum + count, 0);
+    let currentAngle = -0.5 * Math.PI;
+    let centerX = 300, centerY = 150;
+
+    // Add code to draw the slice labels in this loop.
+    for (let result of results) {
+        let sliceAngle = (result.count / total) * 2 * Math.PI;
+        let middleAngle = currentAngle + 0.5 * sliceAngle;
+        let textX = Math.cos(middleAngle) * 120 + centerX;
+        let textY = Math.sin(middleAngle) * 120 + centerY;
+        cx.beginPath();
+        cx.arc(centerX, centerY, 100,
+            currentAngle, currentAngle + sliceAngle);
+        currentAngle += sliceAngle;
+        cx.lineTo(centerX, centerY);
+        cx.fillStyle = result.color;
+        cx.fill();
+        
+        cx.fillStyle = "black";
+        cx.textBaseline = "middle";
+        if (Math.cos(middleAngle) < 0)
+        {
+            cx.textAlign = "right";
+        }
+        else
+        {
+            cx.textAlign = "left";
+        }
+        cx.fillText(result.name, textX, textY);
+    }
+
+    const results2 = [
+        {name: "Very happy", count: 104, color: "red"},
+        {name: "Satisfied", count: 63, color: "lightblue"},
+        {name: "Neutral", count: 87, color: "lightgreen"},
+        {name: "Unsatisfied", count: 51, color: "pink"},
+        {name: "Very unhappy", count: 26, color: "silver"},
+        {name: "No comment", count: 18, color: "black"}
+    ];
+
+    let ctx = document.querySelector("canvas").getContext("2d");
+    let total2 = results2.reduce((sum, {count}) => sum + count, 0);
+    let currentAngle2 = -0.5 * Math.PI;
+    let centerX2 = 700, centerY2 = 250;
+
+    // Add code to draw the slice labels in this loop.
+    for (let result2 of results2) { 
+        let sliceAngle2 = (result2.count / total2) * 2 * Math.PI;
+        let middleAngle2 = currentAngle2 + 0.5 * sliceAngle2;
+        let textX2 = Math.cos(middleAngle2) * 120 + centerX2;
+        let textY2 = Math.sin(middleAngle2) * 120 + centerY2;
+        ctx.beginPath();
+        ctx.arc(centerX2, centerY2, 100, currentAngle2, currentAngle2 + sliceAngle2);
+        currentAngle2 += sliceAngle2;
+        ctx.lineTo(centerX2, centerY2);
+        ctx.fillStyle = result2.color;
+        ctx.fill();
+        
+        ctx.fillStyle = "black";
+        ctx.textBaseline = "middle";
+        if (Math.cos(middleAngle2) < 0)
+        {
+            ctx.textAlign = "right";
+        }
+        else
+        {
+            ctx.textAlign = "left";
+        }
+        ctx.fillText(result2.name, textX2, textY2);
+    }
+
+    let condensed = [results, results2];
+    for (let i = 0; i < condensed.length; i++)
+    {
+        console.log(condensed[i]);
+    }
+
+</script>
